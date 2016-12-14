@@ -1,4 +1,5 @@
-import cart.Item;
+package cart;
+
 import org.junit.Test;
 
 import java.time.Instant;
