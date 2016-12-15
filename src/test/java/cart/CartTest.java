@@ -1,8 +1,11 @@
 package cart;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.Objects;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -10,70 +13,58 @@ import static org.junit.Assert.assertTrue;
 
 
 public class CartTest {
+    private Cart cart;
+    private Date jan_1_2017;
+    private Item shoe;
+    private Item bat;
+    private Item pen;
+    private Date jan_1_2016;
+    private Item bread;
+
+    @Before
+    public void setUp() throws Exception {
+        cart = new Cart();
+
+        jan_1_2017 = new Date(117, 1, 1);
+        jan_1_2016 = new Date(116, 1, 1);
+
+        shoe = new Item("Shoe", 100.0, jan_1_2017, 10);
+        bat = new Item("Bat", 5.0, jan_1_2017, 10);
+        pen = new Item("Pen", 5.0, jan_1_2017, 10);
+        bread = new Item("Bread", 5.0, jan_1_2016, 10);
+    }
+
     @Test
     public void shouldReturn2IfCartHasFourItems() throws Exception {
-        Date date = new Date(117, 10, 10);
-        Cart cart = new Cart();
-        cart.add(new Item("Shoe", 10.0, date, 10));
-        cart.add(new Item("Bat", 5.0, date, 10));
-        assertThat(cart.getTotal(), is(15.0));
+        cart.add(shoe);
+        cart.add(bat);
+        assertThat(cart.getTotal(), is(105.0));
     }
 
     @Test
     public void shouldAddPriceOfValidItemsOnly() throws Exception {
-        Cart cart = new Cart();
-
-        Date jan_1_2017 = new Date(117, 1, 1);
-
-        Item shoe = new Item("Shoe", 10.0, jan_1_2017, 10);
         cart.add(shoe);
-
-        Item pen = new Item("Pen", 5.0, jan_1_2017, 10);
         cart.add(pen);
-
-        Date jan_1_2016 = new Date(116, 1, 1);
-
-        Item bread = new Item("Bread", 5.0, jan_1_2016, 10);
         cart.add(bread);
-
-        assertThat(cart.getTotal(), is(15.0));
+        assertThat(cart.getTotal(), is(105.0));
     }
 
     @Test
     public void shouldReturnPriceAfterDiscount() throws Exception {
-        Cart cart = new Cart();
-
-        Date jan_1_2017 = new Date(117, 1, 1);
-
-        Item shoe = new Item("Shoe", 100.0, jan_1_2017, 10);
         cart.add(shoe);
-
-        Item pen = new Item("Pen", 50.0, jan_1_2017, 10);
         cart.add(pen);
-
-        assertThat(cart.getDiscountedTotal(), is(135.0));
+        assertThat(cart.getDiscountedTotal(), is(94.5));
     }
 
     @Test
     public void shouldGiveDisountedTotalLessThanDirectTotal() throws Exception {
-        Cart cart = new Cart();
-
-        Date jan_1_2017 = new Date(117, 1, 1);
-
-        Item shoe = new Item("Shoe", 100.0, jan_1_2017, 10);
         cart.add(shoe);
-
-        Item pen = new Item("Pen", 50.0, jan_1_2017, 10);
         cart.add(pen);
-
         assertTrue(cart.getDiscountedTotal() < cart.getTotal());
     }
 
     @Test
     public void shouldBeAbleToAddOneItemToCart() throws Exception {
-        Cart cart = new Cart();
-        Date jan_1_2017 = new Date(117, 1, 1);
-        Item shoe = new Item("Shoe", 100.0, jan_1_2017, 10);
         cart.add(shoe);
         assertThat(cart.getTotal(), is(100.0));
         assertThat(cart.getDiscountedTotal(), is(90.0));
@@ -81,9 +72,6 @@ public class CartTest {
 
     @Test
     public void whenSameItemIsAddedTwoTimesThenTotalShouldBeDoubleOfPrice() throws Exception {
-        Cart cart = new Cart();
-        Date jan_1_2017 = new Date(117, 1, 1);
-        Item shoe = new Item("Shoe", 100.0, jan_1_2017, 10);
         cart.add(shoe);
         cart.add(shoe);
         assertThat(cart.getTotal(), is(200.0));
@@ -91,9 +79,6 @@ public class CartTest {
 
     @Test
     public void shouldBeAbleToMoreThanOneItemAtOneTime() throws Exception {
-        Cart cart = new Cart();
-        Date jan_1_2017 = new Date(117, 1, 1);
-        Item shoe = new Item("Shoe", 100.0, jan_1_2017, 10);
         cart.add(shoe, 3);
         assertThat(cart.getTotal(), is(300.0));
     }

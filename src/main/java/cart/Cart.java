@@ -28,24 +28,12 @@ public class Cart {
     }
 
     public void add(Item item) {
-        if(has(item)){
-            Integer newCount = items.get(item) + 1;
-            items.put(item, newCount);
-        }else{
-            items.put(item, 1);
-        }
-    }
-
-    private boolean has(Item item) {
-        return items.containsKey(item);
+        items.put(item,items.computeIfPresent(item, (item1, integer) -> integer + 1));
+        items.putIfAbsent(item, 1);
     }
 
     public void add(Item item, int count) {
-        if (has(item)){
-            Integer newCount = items.get(item) + count;
-            items.put(item, newCount);
-        }else{
-            items.put(item, count);
-        }
+        items.put(item,items.computeIfPresent(item, (item1, integer) -> integer + count));
+        items.putIfAbsent(item, count);
     }
 }
