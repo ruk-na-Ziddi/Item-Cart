@@ -1,7 +1,6 @@
 package cart;
 
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 
 public class Cart {
@@ -12,17 +11,17 @@ public class Cart {
     }
 
     public Double getTotal(){
-        Date date = Date.from(Instant.now());
+        LocalDate date = LocalDate.now();
         return items.keySet().stream()
-                .filter(item -> item.getEndDate().after(date))
+                .filter(item -> item.getEndDate().isAfter(date))
                 .map(item -> item.getPrice() * items.get(item))
                 .reduce(Double::sum).get();
     }
 
     public Double getDiscountedTotal() {
-        Date date = Date.from(Instant.now());
+        LocalDate date = LocalDate.now();
         return items.keySet().stream()
-                .filter(item -> item.getEndDate().after(date))
+                .filter(item -> item.getEndDate().isAfter(date))
                 .map(item -> item.getPriceAterDisount() * items.get(item))
                 .reduce(Double::sum).get();
     }

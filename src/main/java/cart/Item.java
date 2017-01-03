@@ -1,14 +1,14 @@
 package cart;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Item {
     private String name;
     private Double price;
-    private Date endDate;
+    private LocalDate endDate;
     private int discount;
 
-    public Item(String name, Double price, Date endDate, int discount) {
+    public Item(String name, Double price, LocalDate endDate, int discount) {
         this.name = name;
         this.price = price;
         this.endDate = endDate;
@@ -24,7 +24,7 @@ public class Item {
         return price;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 

@@ -1,11 +1,9 @@
 package cart;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Date;
-import java.util.Objects;
+import java.time.LocalDate;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -14,23 +12,23 @@ import static org.junit.Assert.assertTrue;
 
 public class CartTest {
     private Cart cart;
-    private Date jan_1_2017;
+    private LocalDate jan_1_2018;
     private Item shoe;
     private Item bat;
     private Item pen;
-    private Date jan_1_2016;
+    private LocalDate jan_1_2016;
     private Item bread;
 
     @Before
     public void setUp() throws Exception {
         cart = new Cart();
 
-        jan_1_2017 = new Date(117, 1, 1);
-        jan_1_2016 = new Date(116, 1, 1);
+        jan_1_2016 = LocalDate.of(2016, 1, 1);
+        jan_1_2018 = LocalDate.of(2018, 1, 1);
 
-        shoe = new Item("Shoe", 100.0, jan_1_2017, 10);
-        bat = new Item("Bat", 5.0, jan_1_2017, 10);
-        pen = new Item("Pen", 5.0, jan_1_2017, 10);
+        shoe = new Item("Shoe", 100.0, jan_1_2018, 10);
+        bat = new Item("Bat", 5.0, jan_1_2018, 10);
+        pen = new Item("Pen", 5.0, jan_1_2018, 10);
         bread = new Item("Bread", 5.0, jan_1_2016, 10);
     }
 
